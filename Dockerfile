@@ -12,13 +12,13 @@ RUN echo "deb http://ubuntu.uestc.edu.cn/ubuntu/ xenial main restricted universe
 # update apt
 RUN apt-get update
 
-# install samba with apt-get
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install samba && \
+# install net-tools samba with apt-get
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install net-tools samba && \
+    service nmbd disable && service smbd disable && \
     rm -f /etc/samba/smb.conf
 
 # install rsyslog with apt-get
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install rsyslog && \
-    rm -f /etc/rsyslog.conf && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
