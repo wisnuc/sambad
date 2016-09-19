@@ -13,18 +13,15 @@ RUN echo "deb http://ubuntu.uestc.edu.cn/ubuntu/ xenial main restricted universe
 RUN apt-get update
 
 # install samba with apt-get
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
-    samba && \
-    rm -f /etc/samba/smb.conf && \
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install samba && \
+    rm -f /etc/samba/smb.conf
+
+# install rsyslog with apt-get
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install rsyslog && \
+    rm -f /etc/rsyslog.conf && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
-# install rsyslog with apt-get
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
-    samba && \
-    rm -f /etc/rsyslog.conf
-
-# Caution samba.sh permission, chmod 777
 COPY samba.sh /usr/bin/
 
 RUN chmod a+x /usr/bin/samba.sh
