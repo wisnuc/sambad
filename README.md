@@ -22,18 +22,11 @@
     docker daemon -H tcp://0.0.0.0:5678
   
   2) Run Samba Docker (SystemV Mode)
-    docker -H tcp://0.0.0.0:5678 run -p 137:137/udp -p 138:138/udp -p 139:139 -p 445:445 -ti -v /home/tmp/:/srv/samba/shareFolder  IMAGEID
+    docker run -p 137:137/udp -p 138:138/udp -p 139:139 -p 445:445 -ti -v /home/wisnuc/docker/smb.conf:/etc/samba/smb.conf -v /home/wisnuc/docker/rsyslog.conf:/etc/rsyslog.conf -v /home/wisnuc/docker/bootstrap.sh:/bootstrap.sh IMAGEID
 
   3) Check Samba Container ID
     docker -H tcp://0.0.0.0:5678 ps -a
 
   4) Reenter into Samba Containter
     docker -H tcp://0.0.0.0:5678 exec -it IMAGEID bash
-  ```
-
-  3. Notice<p>
-
-  ```
-  1) Point point
-    Have to point out where the real shell script is & put it to where, just like '-v /host/tmp/test.sh:/srv/samba/run.sh'
   ```
