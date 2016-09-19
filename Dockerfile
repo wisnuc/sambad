@@ -14,7 +14,7 @@ RUN apt-get update
 
 # install net-tools samba with apt-get
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install net-tools samba && \
-    service nmbd disable && service smbd disable && \
+    service nmbd stop && service smbd stop && \
     rm -f /etc/samba/smb.conf
 
 # install rsyslog with apt-get
