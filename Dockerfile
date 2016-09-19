@@ -19,7 +19,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
-RUN rm -f /etc/rsyslog.conf
+# install rsyslog with apt-get
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
+    samba && \
+    rm -f /etc/rsyslog.conf
 
 # Caution samba.sh permission, chmod 777
 COPY samba.sh /usr/bin/
