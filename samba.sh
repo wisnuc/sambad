@@ -27,7 +27,7 @@ adduser()
 # bbbbb:1001:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:4057B60B514C5402DDE3D29A1845C366:[U          ]:LCT-57A84611:
 
 # Arguments:
-#   file - file to import
+#   file - file to run
 # Return: user(s) added to container
 import()
 {
@@ -40,11 +40,26 @@ import()
     pdbedit -i smbpasswd:$file
 }
 
+### runShell: run a shell file
+# Arguments:
+#   file - file to import
+# Return: 100 if error
+runShell()
+{
+    sh ${1}
+    if [ $? -eq 0 ];then
+        exit 0
+    else
+        exit 100
+    fi
+}
+
 mkdir -p /srv/samba/backup/
 
 while getopts ":i:nu:" opt; do
     case "$opt" in
         i) import "$OPTARG" ;;
+        r) runShell "$OPTARG"; RESULT=${?} ;;
         n) NMBD="true" ;;
         u) eval adduser $(sed 's|:| |g' <<< $OPTARG) ;;
         "?") echo "Unknown option: -$OPTARG"; usage 1 ;;
@@ -60,7 +75,7 @@ elif [[ $# -ge 1 ]]; then
     exit 13
 elif ps -ef | egrep -v grep | grep -q smbd; then
     echo "Service is already running."
-elif [[ ${NMBD:-""} ]]; then
+elif [[ ${NMBD:-""} && $RESULT == 0 ]]; then
     ionice -c 3 nmbd -D && ionice -c 3 smbd -D
     while true; do sleep 1000; done
 else
