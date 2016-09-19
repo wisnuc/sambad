@@ -22,7 +22,7 @@
     docker daemon -H tcp://0.0.0.0:5678
   
   2) Run Samba Docker (SystemV Mode)
-    docker run -p 137:137/udp -p 138:138/udp -p 139:139 -p 445:445 -ti -v /home/wisnuc/docker/smb.conf:/etc/samba/smb.conf -v /home/wisnuc/docker/rsyslog.conf:/etc/rsyslog.conf -v /home/wisnuc/docker/bootstrap.sh:/bootstrap.sh IMAGEID
+    docker run -p 137:137/udp -p 138:138/udp -p 139:139 -p 445:445 -ti -v /home/wisnuc/docker/smb.conf:/etc/samba/smb.conf -v /home/wisnuc/docker/bootstrap.sh:/bootstrap.sh IMAGEID
 
   3) Check Samba Container ID
     docker -H tcp://0.0.0.0:5678 ps -a
