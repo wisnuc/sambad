@@ -49,10 +49,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
 # Caution samba.sh permission, chmod 777
 COPY samba.sh /usr/bin/
 
-VOLUME ["/etc/samba","/backup/samba"]
+RUN chmod a+x /usr/bin/samba.sh
 
-RUN chmod 755 /usr/bin/samba.sh
-
-EXPOSE 137 138 139 445
+EXPOSE 137/udp 138/udp 139/tcp 445/tcp
 
 ENTRYPOINT ["samba.sh"]
