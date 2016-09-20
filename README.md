@@ -34,7 +34,7 @@
   3. Test Log Module<p>
 
   ```
-  1) Add vfs object (full_audit) into smb.conf
+  1) Add vfs object (full_audit) into smb.conf (in the running docker's container)
     [user]
             # This share requires authentication to access
             path = /srv/samba/user/
@@ -47,14 +47,14 @@
             full_audit:facility = LOCAL7
             full_audit:priority = ALERT
 
-  2) Add eth0's IP address (the running docker's container) into rsyslog.conf
+  2) Add eth0's IP address into rsyslog.conf (in the running docker's container)
     *.* @172.17.0.1:5555
     
-  3) Restart samba & rsyslog service
+  3) Restart samba & rsyslog service (in the running docker's container)
     service nmbd restart
     service smbd restart
     service rsyslog restart
   
-  4) Run nc to monitor log infor
+  4) Run nc to monitor log infor (in the host PC)
     nc -l -u 172.17.0.1 -p 5555
   ```
