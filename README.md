@@ -47,7 +47,7 @@
             full_audit:facility = LOCAL7
             full_audit:priority = ALERT
 
-  2) Add eth0's IP address into rsyslog.conf
+  2) Add eth0's IP address (the running docker's container) into rsyslog.conf
     *.* @172.17.0.1:5555
     
   3) Restart samba & rsyslog service
