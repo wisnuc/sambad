@@ -13,7 +13,7 @@ RUN echo "deb http://ubuntu.uestc.edu.cn/ubuntu/ xenial main restricted universe
 RUN apt-get update
 
 # install net-tools samba with apt-get
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install net-tools samba && \
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install curl net-tools samba && \
     service nmbd stop && service smbd stop && \
     rm -f /etc/samba/smb.conf
 
