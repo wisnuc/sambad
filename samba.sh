@@ -32,7 +32,7 @@ while true; do
   sleep 1
   rollover=`curl ${gateway}:3721/samba/rollover`
   if [ "$ro" != "$rollover" ]; then
-    echo -n "@@@@ $(date) new rollover ${rollover}, see you later!" > /dev/udp/${gateway}/3721
+    echo -n "@@@@ $(date) init rollover ${ro}, new rollover ${rollover}, see you later!" > /dev/udp/${gateway}/3721
     exit 0
   fi
 done
