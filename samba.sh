@@ -12,6 +12,7 @@ echo "local7.* @${gateway}:3721" >> /etc/rsyslog.conf
 service rsyslog restart
 
 ro=`curl ${gateway}:3721/samba/rollover`
+echo -n "@@@@ $(date) init rollover ${ro}" > /dev/udp/${gateway}/3721
 
 # write smb.conf
 curl ${gateway}:3721/samba/conf > /etc/samba/smb.conf
@@ -31,6 +32,7 @@ while true; do
   sleep 1
   rollover=`curl ${gateway}:3721/samba/rollover`
   if [ "$ro" != "$rollover" ]; then
+    echo -n "@@@@ $(date) new rollover ${rollover}, see you later!" > /dev/udp/${gateway}/3721
     exit 0
   fi
 done
