@@ -4,6 +4,23 @@ set -e                              # should exit if any statement returns a non
 
 sleep 5
 
+# remove existing user with 5000 > uid >= 2000
+while read line; do
+
+  USERNAME=$(echo "$line" | cut -f 1 -d:)
+  USERUID=$(echo "$line" | cut -f 3 -d:)
+
+  if [ "$USERUID" -ge "2000" ] && [ "$USERUID" -lt "5000" ]; then
+    deluser $USERNAME
+    echo -n "@@@@ $(date) user $USERNAME deleted"
+  fi  
+
+done < /etc/passwd
+
+# remove existing tdb
+rm -rf /var/lib/samba/private/passdb.tdb
+echo -n "@@@@ $(date) samba passdb.tdb removed"
+
 # get hot ip address on docker0 bridge
 gateway=$(netstat -nr | grep '^0\.0\.0\.0' | awk '{ print $2 }')
 
