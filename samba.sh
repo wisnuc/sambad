@@ -27,6 +27,8 @@ rm -rf /var/lib/samba/private/passdb.tdb
 echo -n "@@@@ $(date) samba passdb.tdb removed" > /dev/udp/${gateway}/3721
 
 # update rsyslog conf
+rm -rf /etc/rsyslog.conf
+cp /etc/rsyslog.conf.orig /etc/rsyslog.conf
 echo "local7.* @${gateway}:3721" >> /etc/rsyslog.conf
 service rsyslog restart
 
