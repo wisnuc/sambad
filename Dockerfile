@@ -19,6 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install curl net-tools samba && \
 
 # install rsyslog with apt-get
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install rsyslog && \
+    cp /etc/rsyslog.conf /etc/rsyslog.conf.orig && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
