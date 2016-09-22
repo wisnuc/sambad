@@ -2,6 +2,8 @@
 
 set -e                              # should exit if any statement returns a non-true return value
 
+sleep 5
+
 # get hot ip address on docker0 bridge
 gateway=$(netstat -nr | grep '^0\.0\.0\.0' | awk '{ print $2 }')
 
@@ -29,7 +31,7 @@ pdbedit -i smbpasswd:/database
 ionice -c 3 nmbd -D && ionice -c 3 smbd -D
 
 while true; do
-  sleep 1
+  sleep 5
   rollover=`curl ${gateway}:3721/samba/rollover`
   if [ "$ro" != "$rollover" ]; then
     echo -n "@@@@ $(date) init rollover ${ro}, new rollover ${rollover}, see you later!" > /dev/udp/${gateway}/3721
