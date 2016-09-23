@@ -26,6 +26,9 @@ done < /etc/passwd
 rm -rf /var/lib/samba/private/passdb.tdb
 echo -n "@@@@ $(date) samba passdb.tdb removed" > /dev/udp/${gateway}/3721
 
+# remove existing username map
+rm -rf /usernamemap.txt
+
 # update rsyslog conf
 rm -rf /etc/rsyslog.conf
 cp /etc/rsyslog.conf.orig /etc/rsyslog.conf
@@ -34,6 +37,10 @@ service rsyslog restart
 
 ro=`curl ${gateway}:3721/samba/rollover`
 echo -n "@@@@ $(date) init rollover ${ro}" > /dev/udp/${gateway}/3721
+
+# write username map
+curl ${gateway}:3721/samba/usernamemap > /usernamemap.txt
+echo -n "@@@@ $(date) usernamemap.txt written"
 
 # write smb.conf
 curl ${gateway}:3721/samba/conf > /etc/samba/smb.conf
